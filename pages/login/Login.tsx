@@ -1,10 +1,18 @@
 import CustomButton from "@/src/components/CustomButton/CustomButton";
 import CustomInput from "@/src/components/CustomInput";
+import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 const Login = () => {
-  const [inputs, setInputs] = useState({}); // Declare the state variable and its setter function
+  const [inputs, setInputs] = useState<{ email?: string; password?: string }>({}); 
+  const [error, setError] = useState(false);
+  const router = useRouter();
+  const { data: session, status } = useSession();
+
+  
+  const isDisabled = !inputs.email || !inputs.password;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const name = event.target.name;
@@ -12,7 +20,33 @@ const Login = () => {
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
-  console.log("inputs", inputs);
+  useEffect(() => {
+    if (session && router.pathname === '/login') {
+      router.replace('/notes');
+    }
+  }, [session, router]);
+
+
+  const handleSubmit = async (event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    if (inputs.email && inputs.password) {
+      const result = await signIn("credentials", {
+        redirect: false,
+        email: inputs.email,
+        password: inputs.password,
+      });
+
+      if (result && result.error) {
+        setError(true);
+      } else {
+        setError(false);
+        router.push("/notes");
+      }
+    } else {
+      setError(true);
+    } 
+  };
+
 
   return (
     <div className="bg-gradient-to-r from-green via-green-g to-primary from-0% via-55% to-100%  w-screen h-screen flex justify-center items-center">
@@ -44,7 +78,7 @@ const Login = () => {
           />
           <CustomInput
             type="password"
-            className="w-80 h-9 border border-black pl-2 rounded-md "
+            className="w-80 h-9 border border-black pl-2 rounded-md di"
             placeholder="Contraseña"
             label="Contraseña"
             name="password"
@@ -53,7 +87,9 @@ const Login = () => {
         </div>
         <CustomButton
           label="Iniciar sesion"
-          classNameButton="w-32 py-2 bg-green rounded-md text-white mt-8 mb-40"
+          classNameButton="w-32 py-2 bg-green rounded-md text-white mt-8 mb-40 disabled:bg-gray disabled:cursor-not-allowed"
+          onClick={handleSubmit}
+          disabled={isDisabled || error}
         />
         <p className="text-sm font-normal ">
           ¿No tiene una cuenta?{" "}

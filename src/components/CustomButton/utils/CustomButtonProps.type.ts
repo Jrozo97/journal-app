@@ -1,7 +1,8 @@
+import { ChangeEvent } from "react";
 
   export type CustomButtonProps = {
     disabled?: boolean;
-    onClick?: () => void;
+    onClick?: (event: ChangeEvent<HTMLInputElement>) => void;
     label: string;
     color?: string;
     classNameButton?: string;
