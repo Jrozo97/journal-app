@@ -1,17 +1,22 @@
 import CustomButton from "@/src/components/CustomButton/CustomButton";
 import CustomInput from "@/src/components/CustomInput";
-import { signIn, useSession } from "next-auth/react";
+import { getSession, signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { useAppDispatch } from "@/src/hooks/reduxHook";
+import { setUserState } from "@/slices/userSlice";
+import User from "@/interface/User";
 
 const Login = () => {
-  const [inputs, setInputs] = useState<{ email?: string; password?: string }>({}); 
+  const [inputs, setInputs] = useState<{ email?: string; password?: string }>(
+    {}
+  );
   const [error, setError] = useState(false);
   const router = useRouter();
   const { data: session, status } = useSession();
+  const distpatch = useAppDispatch();
 
-  
   const isDisabled = !inputs.email || !inputs.password;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -21,11 +26,10 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (session && router.pathname === '/login') {
-      router.replace('/notes');
+    if (session && router.pathname === "/login") {
+      router.replace("/notes");
     }
   }, [session, router]);
-
 
   const handleSubmit = async (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -39,14 +43,17 @@ const Login = () => {
       if (result && result.error) {
         setError(true);
       } else {
-        setError(false);
-        router.push("/notes");
+        const userSession = await getSession();
+        if (userSession) {
+          setError(false);
+          router.push("/notes");
+          distpatch(setUserState(userSession.user as User));
+        }
       }
     } else {
       setError(true);
-    } 
+    }
   };
-
 
   return (
     <div className="bg-gradient-to-r from-green via-green-g to-primary from-0% via-55% to-100%  w-screen h-screen flex justify-center items-center">

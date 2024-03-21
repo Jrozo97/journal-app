@@ -3,6 +3,7 @@ interface User {
   uid: string;
   name: string;
   token: string;
+  email?: string;
 }
 
 export default User;
