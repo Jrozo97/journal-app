@@ -1,24 +1,30 @@
+import RegisterUser from "@/interface/RegisterUser";
+import User from "@/interface/User";
+import { useUserRegisterMutation } from "@/services/userApi";
+import { setUserState } from "@/slices/userSlice";
 import CustomButton from "@/src/components/CustomButton/CustomButton";
 import CustomInput from "@/src/components/CustomInput";
-import { getSession, signIn, useSession } from "next-auth/react";
-import Image from "next/image";
-import React, { ChangeEvent, useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import { useAppDispatch } from "@/src/hooks/reduxHook";
-import { setUserState } from "@/slices/userSlice";
-import User from "@/interface/User";
+import { getSession, signIn } from "next-auth/react";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import React, { ChangeEvent, useState } from "react";
 
-const Login = () => {
-  const [inputs, setInputs] = useState<{ email?: string; password?: string }>(
-    {}
-  );
+const Register = () => {
+  const [inputs, setInputs] = useState<RegisterUser>({
+    name: "",
+    email: "",
+    phone: "",
+    password: "",
+  });
   const [error, setError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { data: session, status } = useSession();
-  const distpatch = useAppDispatch();
-
   const isDisabled = !inputs.email || !inputs.password;
+  const distpatch = useAppDispatch();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [userRegister, { isLoading: isLoadingUser }] =
+    useUserRegisterMutation();
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const name = event.target.name;
@@ -26,16 +32,12 @@ const Login = () => {
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
-  useEffect(() => {
-    if (session && router.pathname === "/login") {
-      router.replace("/notes");
-    }
-  }, [session, router]);
+  const handleSubmit = async () => {
+    setIsLoading(true);
+    const response = await userRegister(inputs);
+    const { data }: any = response;
 
-  const handleSubmit = async (event: ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
-    if (inputs.email && inputs.password) {
-      setIsLoading(true);
+    if (data) {
       const result = await signIn("credentials", {
         redirect: false,
         email: inputs.email,
@@ -58,10 +60,6 @@ const Login = () => {
     }
   };
 
-  const redirectToRegister = () => {
-    router.push("/register");
-  }
-
   return (
     <div className="bg-gradient-to-r from-green via-green-g to-primary from-0% via-55% to-100%  w-screen h-screen flex justify-center items-center">
       <div className="px-20 py-9 bg-white rounded-2xl flex flex-col items-center">
@@ -79,9 +77,17 @@ const Login = () => {
             Nunca lo olvides
           </p>
         </div>
-        <p className="text-2xl font-semibold mt-10">Inicia sesion</p>
+        <p className="text-2xl font-semibold mt-10">Registrate</p>
 
         <div className="flex flex-col gap-5 mt-10">
+          <CustomInput
+            type="text"
+            className="w-80 h-9 border border-black pl-2 rounded-md"
+            placeholder="Ingrese su nombre"
+            label="Nombre completo"
+            name="name"
+            onChange={handleChange}
+          />
           <CustomInput
             type="email"
             className="w-80 h-9 border border-black pl-2 rounded-md"
@@ -91,25 +97,33 @@ const Login = () => {
             onChange={handleChange}
           />
           <CustomInput
+            type="tel"
+            className="w-80 h-9 border border-black pl-2 rounded-md"
+            placeholder="Ingrese su telefono"
+            label="Telefono"
+            name="phone"
+            onChange={handleChange}
+          />
+          <CustomInput
             type="password"
             className="w-80 h-9 border border-black pl-2 rounded-md "
-            placeholder="Contraseña"
+            placeholder="Ingrese la contraseña"
             label="Contraseña"
             name="password"
             onChange={handleChange}
           />
         </div>
         <CustomButton
-          label="Iniciar sesion"
-          classNameButton="w-auto h-auto px-7 py-2 bg-green rounded-md text-white mt-8 mb-40 disabled:bg-gray disabled:cursor-not-allowed"
+          label="Registrarse"
+          classNameButton="w-32 py-2 bg-green rounded-md text-white my-8 disabled:bg-gray disabled:cursor-not-allowed"
           onClick={handleSubmit}
           disabled={isDisabled || error}
-          loading={isLoading}
+          loading={isLoadingUser}
         />
         <p className="text-sm font-normal ">
-          ¿No tiene una cuenta?{" "}
-          <span className="font-medium text-primary underline cursor-pointer" onClick={redirectToRegister}>
-            Crear una cuenta
+          ¿Ya tiene una cuenta?{" "}
+          <span className="font-medium text-primary underline">
+            Iniciar sesión
           </span>
         </p>
       </div>
@@ -117,4 +131,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
