@@ -18,8 +18,12 @@ const config: Config = {
         "success": "#2C98A0",
         "green": "#2C98A0",
         "green-g": "#417D7A",
-      
+        "green-white": "#F2FBFB",
+      },
+      boxShadow: {
+        'custom-tooltip': '0 0 1px 0 rgba(0, 0, 0, 0.5)',
       }
+
     },
   },
   plugins: [],
