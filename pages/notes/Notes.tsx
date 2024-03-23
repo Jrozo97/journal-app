@@ -2,6 +2,7 @@ import React from 'react'
 import { signOut } from 'next-auth/react';
 import { useAppSelector } from '@/src/hooks/reduxHook';
 import { selectUser } from '@/slices/userSlice';
+import HeaderPage from '@/src/components/HeaderMenu/HeaderPage';
 
 const Notes = () => {
   const handleLogout = async () => {
@@ -13,12 +14,13 @@ const Notes = () => {
 
   return (
     <>
-      <h1>Notes</h1>
-      <button className=' bg-primary text-white rounded-md py-2 px-4' onClick={handleLogout}>Logout</button>
+      <HeaderPage 
+        titleHeader='Notas Rapidas'
+      />
     </>
   );
 };
 
 
 export default Notes
-
+ 
