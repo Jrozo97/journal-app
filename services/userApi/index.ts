@@ -6,11 +6,6 @@ export const UserApi = createApi({
   baseQuery: fetchBaseQuery({ 
     baseUrl: `${process.env.NEXT_PUBLIC_ENDPOINT}/auth`,
     prepareHeaders: (headers, { getState }) => {
-      const token: any = getState()
-      const userToken = token.user.token;
-      if (userToken) {
-        headers.set("x-token", `${token}`);
-      }
       headers.set('Content-Type', 'application/json');
       return headers;
     }, 
@@ -20,4 +15,4 @@ export const UserApi = createApi({
   }),
 });
 
-export const { useUserRegisterMutation } = UserApi;
+export const { useUserRegisterMutation, useLazyRefeshTokenQuery } = UserApi;

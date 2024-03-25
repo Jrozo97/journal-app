@@ -4,6 +4,7 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 import { UserApi } from "./services/userApi";
+import { JournalAPi } from "./services/journalApi";
 
 const persistConfig = {
   key: "journal",
@@ -13,6 +14,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   [UserApi.reducerPath]: UserApi.reducer,
+  [JournalAPi.reducerPath]: JournalAPi.reducer,
   user: userReducer,
 });
 
@@ -21,7 +23,10 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({ serializableCheck: false }).concat(UserApi.middleware),
+    getDefaultMiddleware({ serializableCheck: false }).concat(
+      UserApi.middleware,
+      JournalAPi.middleware
+    ),
 });
 
 export const persistor = persistStore(store);

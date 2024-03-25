@@ -42,7 +42,7 @@ const SideMenu = () => {
   return (
     <div className="flex flex-col px-6 py-20 bg-green-white w-[15.55vw] shadow-custom-tooltip items-center">
       <Image src="icons/logo-journal.svg" alt="logo" width={100} height={100} />
-      <h1 className="font-semibold text-primary italic text-3xl">JournalApp</h1>
+      <h1 className="font-semibold text-primary italic text-3xl mt-3">JournalApp</h1>
 
       <div className="flex flex-col gap-6 mt-24">
         {option.map((item) => {
@@ -51,7 +51,7 @@ const SideMenu = () => {
           return (
             <div
               key={item.id}
-              className="bg-secondary py-2 px-5 rounded-md flex items-center justify-center cursor-pointer"
+              className={`py-2 px-5 rounded-md flex items-center justify-center cursor-pointer ${isEnabled ? "bg-secondary" : "bgr-green-white"}`}
               onClick={() => routes.push(item.url)}
             >
               <div className="flex flex-row gap-2 items-center justify-center">

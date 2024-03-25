@@ -1,4 +1,6 @@
 
+import { selectUser } from '@/slices/userSlice';
+import { useAppSelector } from '@/src/hooks/reduxHook';
 import { GetServerSideProps } from 'next';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -11,6 +13,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 const HomePage = () => {
+
+  const user = useAppSelector(selectUser);
+
+  console.log("user", user.token)
+
+  
+
   return <div>Redireccionando...</div>;
 };
 
