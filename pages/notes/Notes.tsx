@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { signOut } from "next-auth/react";
 import { useAppSelector } from "@/src/hooks/reduxHook";
 import { selectUser } from "@/slices/userSlice";
-import HeaderPage from "@/src/components/HeaderMenu/HeaderPage";
+
 import { useLazyGetNotesListQuery } from "@/services/journalApi";
-import { ListNotes, Notes } from "@/interface/Notes";
+import { ListNotes, DataNotes } from "@/interface/Notes";
+import HeaderPage from "@/src/components/HeaderPage";
+import ListDataSearch from "@/src/components/ListDataSearch/ListDataSearch";
 
 const Notes = () => {
   const handleLogout = async () => {
@@ -19,7 +21,7 @@ const Notes = () => {
   const [totalPage, setTotalPage] = useState(0);
   const [totalRecords, setTotalRecords] = useState(0);
   const [error, setError] = useState(false);
-  const [notes, setNotes] = useState<Notes[]>([]);
+  const [notes, setNotes] = useState<DataNotes[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const [getNotesList, { isLoading: isLoadingNotes }] = useLazyGetNotesListQuery();
@@ -32,14 +34,18 @@ const Notes = () => {
       limit,
     })
       .then((res) => {
-        const resDataNote = res.data as { notes: ListNotes };
+        const resDataNote = res.data as ListNotes;
         const resJson = res.data // Type assertion to specify the type of resData
         console.log("resData", resDataNote);
-        setNotes(resDataNote.notes as Notes[]);
+        setNotes(resDataNote.notes as DataNotes[]);
+        setTotalPage(resDataNote?.totalPage as number);
+        setTotalRecords(resDataNote?.totalRecords as number);
+        setError(resDataNote?.error as boolean);
 
       })
       .catch((err) => {
         console.log(err);
+        setError(true);
       }).finally(() => {
         setIsLoading(false);
       });
@@ -51,6 +57,15 @@ const Notes = () => {
     <>
       <HeaderPage titleHeader="Notas Rapidas" />
       <button onClick={handleLogout}>Cerrar Sesion</button>
+      <ListDataSearch
+        setPage={setPage}
+        page={page}
+        setSearch={setSearch}
+        totalPage={totalPage}
+        error={error}
+        isLoading={isLoading}
+        notes={notes}
+      />
     </>
   );
 };

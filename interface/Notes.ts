@@ -12,14 +12,14 @@ export type DataCreateNote = {
 };
 
 export interface ListNotes {
-  notes?: Notes[];
+  notes?: DataNotes[];
   page?: number;
   totalPage?: number;
   totalRecords?: number;
   error?: boolean;
 }
 
-export interface Notes {
+export interface DataNotes {
   title?: string;
   content?: string;
   date?: string;
