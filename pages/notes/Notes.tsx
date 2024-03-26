@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { signOut } from "next-auth/react";
 import { useAppSelector } from "@/src/hooks/reduxHook";
 import { selectUser } from "@/slices/userSlice";
@@ -7,6 +7,8 @@ import { useLazyGetNotesListQuery } from "@/services/journalApi";
 import { ListNotes, DataNotes } from "@/interface/Notes";
 import HeaderPage from "@/src/components/HeaderPage";
 import ListDataSearch from "@/src/components/ListDataSearch/ListDataSearch";
+import { useRefreshToken } from "@/src/hooks/useRefreshToken";
+import { checkTokenExpiration } from "@/src/utils/utilsFunctions";
 
 const Notes = () => {
   const handleLogout = async () => {
@@ -25,6 +27,15 @@ const Notes = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [getNotesList, { isLoading: isLoadingNotes }] = useLazyGetNotesListQuery();
+
+  const refreshToken = useRefreshToken();
+
+  useEffect(() => {
+    const tokenRemainingTime = checkTokenExpiration(user.token);
+    if (tokenRemainingTime <= 2) {
+      refreshToken();
+    }
+  }, [refreshToken, user.token]);
 
   React.useEffect(() => {
     setIsLoading(true);
@@ -63,7 +74,7 @@ const Notes = () => {
         setSearch={setSearch}
         totalPage={totalPage}
         error={error}
-        isLoading={isLoading}
+        isLoading={isLoading || isLoadingNotes}
         notes={notes}
       />
     </>

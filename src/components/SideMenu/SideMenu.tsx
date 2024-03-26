@@ -51,7 +51,7 @@ const SideMenu = () => {
           return (
             <div
               key={item.id}
-              className={`py-2 px-5 rounded-md flex items-center justify-center cursor-pointer ${isEnabled ? "bg-secondary" : "bgr-green-white"}`}
+              className={`py-2 px-5 rounded-md flex items-start justify-start cursor-pointer ${isEnabled ? "bg-secondary" : "bgr-green-white"}`}
               onClick={() => routes.push(item.url)}
             >
               <div className="flex flex-row gap-2 items-center justify-center">

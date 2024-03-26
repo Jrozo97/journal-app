@@ -1,4 +1,4 @@
-import { ListNotes, Notes, ParamsQueryNotes } from "@/interface/Notes";
+import { ListNotes, DataNotes, ParamsQueryNotes } from "@/interface/Notes";
 
 function endpoints(builder: any) {
   return {
@@ -11,7 +11,7 @@ function endpoints(builder: any) {
       transformResponse: (res: ListNotes) => res || {},
     }),
     createNote: builder.mutation({
-      query: (data: Notes) => ({
+      query: (data: DataNotes) => ({
         url: "/notes/create",
         method: "POST",
         body: data,
