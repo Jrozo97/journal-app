@@ -1,7 +1,6 @@
 import { jwtDecode } from "jwt-decode";
 
 
-
 export const formatTime = (date: Date): string => {
   return date
     .toLocaleDateString("es-ES", {

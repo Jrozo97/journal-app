@@ -44,19 +44,19 @@ const CustomInput: React.FC<CustomInputProps> = ({
           {label}
         </p>
       )}
-    {type === "textarea" ? (
+      {type === "textarea" ? (
         <textarea
-            className={`placeholder:text-[#C4C4C4] ${className}`}
-            disabled={disabled}
-            placeholder={placeholder}
-            rows={rows}
-            name={name}
-            onChange={onChangeTextArea}
-            defaultValue={defaultValue}
-            id={id}
-            onKeyDown={handleKeyDown}
+          className={`placeholder:text-[#C4C4C4] ${className}`}
+          disabled={disabled}
+          placeholder={placeholder}
+          rows={rows}
+          name={name}
+          onChange={onChangeTextArea}
+          defaultValue={defaultValue}
+          id={id}
+          onKeyDown={handleKeyDown}
         />
-    ) : (
+      ) : (
         <input
           className={`placeholder:text-[#C4C4C4] ${className}`}
           disabled={disabled}

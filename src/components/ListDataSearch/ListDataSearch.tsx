@@ -7,7 +7,7 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useRef, useState } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Image from "next/image";
 import MenuActions from "../MenuActions/MenuActions";
@@ -17,6 +17,8 @@ import { formatTime } from "@/src/utils/utilsFunctions";
 import SearchIcon from "@mui/icons-material/Search";
 import ClearIcon from "@mui/icons-material/Clear";
 import CustomButton from "../CustomButton/CustomButton";
+import CustomPopup from "../CustomPopup";
+import CreateNotes from "@/src/modules/CreateNotes";
 
 const ListDataSearch: React.FC<ParamsListDataSearch> = ({
   setPage,
@@ -29,6 +31,11 @@ const ListDataSearch: React.FC<ParamsListDataSearch> = ({
 }) => {
   const [inputSearch, setInputSearch] = useState<string>("");
   const [typingTimeout, setTypingTimeout] = useState<number | null>(null);
+  const createNote = useRef();
+
+  const toggleCreateNote = () => {
+    (createNote.current as any).toggle();
+  };
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     if (typingTimeout) {
@@ -78,10 +85,15 @@ const ListDataSearch: React.FC<ParamsListDataSearch> = ({
           onChange={handleSearch}
           className="cursor-pointer"
         />
-		<CustomButton
-		  label="Agregar Nota"
-		  classNameButton="bg-primary text-white rounded-lg px-11  w-auto h-8"
-		/>
+        <CustomButton
+          label="Agregar Nota"
+          classNameButton="bg-primary text-white rounded-lg px-11  w-auto h-8"
+          onClick={toggleCreateNote}
+        />
+        <CustomPopup customRef={createNote} >
+          <CreateNotes/>
+        </CustomPopup>
+      
       </div>
 
       <div className="flex flex-col">

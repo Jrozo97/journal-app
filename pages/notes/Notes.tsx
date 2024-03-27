@@ -26,18 +26,19 @@ const Notes = () => {
   const [notes, setNotes] = useState<DataNotes[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [getNotesList, { isLoading: isLoadingNotes }] = useLazyGetNotesListQuery();
+  const [getNotesList, { isLoading: isLoadingNotes }] =
+    useLazyGetNotesListQuery();
 
   const refreshToken = useRefreshToken();
 
-  useEffect(() => {
-    const tokenRemainingTime = checkTokenExpiration(user.token);
-    if (tokenRemainingTime <= 2) {
-      refreshToken();
-    }
-  }, [refreshToken, user.token]);
+  // useEffect(() => {
+  //   const tokenRemainingTime = checkTokenExpiration(user.token);
+  //   if (tokenRemainingTime <= 2) {
+  //     refreshToken();
+  //   }
+  // }, [refreshToken, user.token]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setIsLoading(true);
     getNotesList({
       page,
@@ -46,23 +47,23 @@ const Notes = () => {
     })
       .then((res) => {
         const resDataNote = res.data as ListNotes;
-        const resJson = res.data // Type assertion to specify the type of resData
+        const resJson = res.data; // Type assertion to specify the type of resData
         console.log("resData", resDataNote);
         setNotes(resDataNote.notes as DataNotes[]);
         setTotalPage(resDataNote?.totalPage as number);
         setTotalRecords(resDataNote?.totalRecords as number);
         setError(resDataNote?.error as boolean);
-
       })
       .catch((err) => {
         console.log(err);
         setError(true);
-      }).finally(() => {
+      })
+      .finally(() => {
         setIsLoading(false);
       });
   }, [getNotesList, limit, page, search]);
 
-  console.log("notes", notes)
+  console.log("notes", notes);
 
   return (
     <>
