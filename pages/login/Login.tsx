@@ -2,7 +2,7 @@ import CustomButton from "@/src/components/CustomButton/CustomButton";
 import CustomInput from "@/src/components/CustomInput";
 import { getSession, signIn, useSession } from "next-auth/react";
 import Image from "next/image";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, MouseEvent, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useAppDispatch } from "@/src/hooks/reduxHook";
 import { setUserState } from "@/slices/userSlice";
@@ -32,7 +32,7 @@ const Login = () => {
     }
   }, [session, router]);
 
-  const handleSubmit = async (event: ChangeEvent<HTMLInputElement>) => {
+  const handleSubmit = async (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (inputs.email && inputs.password) {
       setIsLoading(true);

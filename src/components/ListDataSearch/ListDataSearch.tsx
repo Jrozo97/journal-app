@@ -90,8 +90,10 @@ const ListDataSearch: React.FC<ParamsListDataSearch> = ({
           classNameButton="bg-primary text-white rounded-lg px-11  w-auto h-8"
           onClick={toggleCreateNote}
         />
-        <CustomPopup customRef={createNote} >
-          <CreateNotes/>
+        <CustomPopup customRef={createNote} closeOnEscape={false} >
+          <CreateNotes
+            onClose={toggleCreateNote}
+          />
         </CustomPopup>
       
       </div>

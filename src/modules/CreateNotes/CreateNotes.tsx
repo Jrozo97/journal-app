@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 
-const CreateNotes = () => {
+const CreateNotes = ({ onClose }: { onClose: () => void }) => {
+
+  const [inputs, setInputs] = useState({
+    title: "",
+    description: "",
+  });
+
   return (
     <div className="pt-16 px-28 pb-10 bg-white rounded-2xl flex flex-col items-center w-[680px] h-[735px] ">
       <p className="font-bold text-3xl text-primary">Creación de nota</p>
@@ -23,7 +29,10 @@ const CreateNotes = () => {
         </div>
       </div>
       <div className="flex flex-row w-full justify-between mt-11">
-        <button className="w-36 h-12 bg-primary text-white rounded-lg">
+        <button
+          className="w-36 h-12 bg-primary text-white rounded-lg"
+          onClick={onClose}
+        >
           Cancelar
         </button>
         <button className="w-36 h-12 bg-primary text-white rounded-lg">
