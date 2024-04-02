@@ -2,32 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+}
+
+
+.popup-overlay {
+  background-color: rgba(30, 30, 30, 0.7);
+}
+
+.notebook-textarea {
+  background-image: linear-gradient(to bottom, transparent 95%, rgba(0, 0, 0, 0.1) 95%);
+  background-size: 100% 1.3rem;
+  line-height: 1.256rem;
+  padding-top: 0.3rem;
+  padding-bottom: 1rem;
 }
