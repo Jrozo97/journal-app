@@ -8,6 +8,15 @@ function endpoints(builder: any) {
         method: "POST",
         body: data,
       }),
+      transformResponse: (res: any) => res || {}
+    }),
+    refeshToken: builder.query({
+      query: ({uid, name}: {uid: string, name: string}) => ({
+        url: "/renew",
+        method: "GET",
+        params: {uid, name},
+      }),
+      transformResponse: (res: any) => res || {}
     }),
   };
 }

@@ -3,17 +3,24 @@ import { CustomButtonProps } from "./utils/CustomButtonProps.type";
 
 const CustomButton: React.FC<CustomButtonProps> = ({
   disabled,
-  onClick,
+  onClick = () => {},
   label,
   color = "white",
   classNameButton,
   loading,
   classText,
 }) => {
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (onClick) {
+      onClick(event);
+    }
+  };
+
   return (
     <button
       disabled={disabled}
-      onClick={onClick}
+      onClick={handleClick}
       color={color}
       className={classNameButton}
     >

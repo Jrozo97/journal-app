@@ -1,7 +1,9 @@
 import user from './user'
 
-export default (builder:any) => ({
+const endpoints = (builder:any) => ({
     ...user(builder)
 })
+
+export default endpoints;
 
 

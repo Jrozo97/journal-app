@@ -1,0 +1,7 @@
+.MuiDrawer-root{
+    background-color: #F2FBFB;
+    width: 224px;
+    height: 100vh;
+    padding: 72px 24px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+}
