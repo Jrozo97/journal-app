@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import type { NextApiRequest } from "next";
 
 export async function middleware(req: NextApiRequest) {
-  const session = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+  const session = await getToken({ req, secret: process.env.AUTH_SECRET });
 
   // Check if the path is "/auth/login".
   const url = req.url;
