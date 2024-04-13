@@ -1,7 +1,9 @@
-import userReducer from "@/slices/userSlice";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+
+import userReducer from "@/slices/userSlice";
+import noteReducer from "@/slices/noteSlice";
 
 import { UserApi } from "./services/userApi";
 import { JournalAPi } from "./services/journalApi";
@@ -16,6 +18,7 @@ const rootReducer = combineReducers({
   [UserApi.reducerPath]: UserApi.reducer,
   [JournalAPi.reducerPath]: JournalAPi.reducer,
   user: userReducer,
+  note: noteReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

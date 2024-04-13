@@ -16,3 +16,12 @@ export type CustomPopupProps = {
   closeOnDocumentClick?: boolean;
   closeOnEscape?: boolean;
 };
+
+
+export type CustomButtonProps = {
+  disabled?: boolean;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  label: string;
+  className?: string;
+  loading?: boolean;
+};

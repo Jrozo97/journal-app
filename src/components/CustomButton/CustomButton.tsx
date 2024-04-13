@@ -1,16 +1,14 @@
-import Image from "next/image";
-import { CustomButtonProps } from "./utils/CustomButtonProps.type";
 
-const CustomButton: React.FC<CustomButtonProps> = ({
+import { CustomButtonProps } from "@/types/components.types";
+import Image from "next/image";
+
+const CustomButton = ({
   disabled,
   onClick = () => {},
   label,
-  color = "white",
-  classNameButton,
+  className,
   loading,
-  classText,
-}) => {
-
+}: CustomButtonProps) => {
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (onClick) {
       onClick(event);
@@ -21,21 +19,18 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     <button
       disabled={disabled}
       onClick={handleClick}
-      color={color}
-      className={classNameButton}
+      className={className}
     >
-      <p className={`flex flex-row justify-center gap-4 ${classText}`}>
-        {label}
-        {loading && (
-          <Image
-            src="/icons/loadData.svg"
-            alt="loading"
-            width={24}
-            height={24}
-            className="animate-spin"
-          />
-        )}
-      </p>
+      {label}
+      {loading && (
+        <Image
+          src="/icons/loadData.svg"
+          alt="loading"
+          width={16}
+          height={16}
+          className="animate-spin"
+        />
+      )}
     </button>
   );
 };

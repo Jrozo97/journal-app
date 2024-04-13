@@ -87,15 +87,12 @@ const ListDataSearch: React.FC<ParamsListDataSearch> = ({
         />
         <CustomButton
           label="Agregar Nota"
-          classNameButton="bg-primary text-white rounded-lg px-11  w-auto h-8"
+          className="bg-primary text-white rounded-lg px-11 w-auto py-2 "
           onClick={toggleCreateNote}
         />
-        <CustomPopup customRef={createNote} closeOnEscape={false} >
-          <CreateNotes
-            onClose={toggleCreateNote}
-          />
+        <CustomPopup customRef={createNote} closeOnEscape={false}>
+          <CreateNotes onClose={toggleCreateNote} />
         </CustomPopup>
-      
       </div>
 
       <div className="flex flex-col">
@@ -131,6 +128,8 @@ const ListDataSearch: React.FC<ParamsListDataSearch> = ({
                     const convertDate = formatTime(dateFormated as Date);
                     console.log("convertDate", convertDate);
 
+                    console.log("note", note);
+
                     const optionsListData = [
                       {
                         id: 1,
@@ -153,7 +152,7 @@ const ListDataSearch: React.FC<ParamsListDataSearch> = ({
                         className="w-full h-56 rounded-lg shadow-custom-tooltip px-4 pt-4 pb-3 flex flex-col gap-4 items-center"
                       >
                         <Image
-                          src="/icons/iconNotes.svg"
+                          src={note.img ? note.img : "/icons/iconNotes.svg"}
                           alt="search"
                           width={152}
                           height={152}

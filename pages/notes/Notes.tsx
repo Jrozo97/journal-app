@@ -19,7 +19,7 @@ const Notes = () => {
   console.log(user);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(8);
   const [totalPage, setTotalPage] = useState(0);
   const [totalRecords, setTotalRecords] = useState(0);
   const [error, setError] = useState(false);

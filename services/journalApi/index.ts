@@ -21,4 +21,4 @@ export const JournalAPi = createApi({
   }),
 });
 
-export const { useLazyGetNotesListQuery } = JournalAPi;
+export const { useLazyGetNotesListQuery, useCreateNoteMutation } = JournalAPi;

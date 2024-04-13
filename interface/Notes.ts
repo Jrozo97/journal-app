@@ -4,11 +4,16 @@ export type ParamsQueryNotes = {
   limit?: number;
 };
 
-export type DataCreateNote = {
+export type InitialDataNote = {
   title?: string;
   content?: string;
   img?: string;
   userId?: string;
+};
+
+export type InitialDataNoteRefresh = {
+  note?: InitialDataNote;
+  refresh?: boolean;
 };
 
 export interface ListNotes {

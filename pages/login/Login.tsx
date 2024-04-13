@@ -62,6 +62,8 @@ const Login = () => {
     router.push("/register");
   }
 
+  const url = "https://ddfy5uqyrs2ko.cloudfront.net/116bea55-17e5-4538-8864-cd4a9d5df622.png"
+
   return (
     <div className="bg-gradient-to-r from-green via-green-g to-primary from-0% via-55% to-100%  w-screen h-screen flex justify-center items-center">
       <div className="px-20 py-9 bg-white rounded-2xl flex flex-col items-center">
@@ -99,9 +101,10 @@ const Login = () => {
             onChange={handleChange}
           />
         </div>
+
         <CustomButton
           label="Iniciar sesion"
-          classNameButton="w-auto h-auto px-7 py-2 bg-green rounded-md text-white mt-8 mb-40 disabled:bg-gray disabled:cursor-not-allowed"
+          className="w-auto h-auto px-7 py-2 bg-green rounded-md text-white mt-8 mb-40 disabled:bg-gray disabled:cursor-not-allowed"
           onClick={handleSubmit}
           disabled={isDisabled || error}
           loading={isLoading}
