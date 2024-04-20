@@ -86,7 +86,7 @@ const FileUploader = ({
                   alt="iconFile"
                   width={110}
                   height={110}
-                  className="object-cover"
+                  className="object-contain max-w-28 max-h-28"
                 />
               </div>
             </div>

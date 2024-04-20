@@ -1,4 +1,5 @@
 import { DataNotes } from "@/interface/Notes";
+import { Toast } from "react-hot-toast";
 
 export type ParamsListDataSearch = {
   setPage: React.Dispatch<React.SetStateAction<number>>;
@@ -11,12 +12,15 @@ export type ParamsListDataSearch = {
 };
 
 export type CustomPopupProps = {
-  customRef: React.MutableRefObject<any> | React.RefObject<any> | null | (() => void);
+  customRef:
+    | React.MutableRefObject<any>
+    | React.RefObject<any>
+    | null
+    | (() => void);
   children: React.ReactNode;
   closeOnDocumentClick?: boolean;
   closeOnEscape?: boolean;
 };
-
 
 export type CustomButtonProps = {
   disabled?: boolean;
@@ -24,4 +28,19 @@ export type CustomButtonProps = {
   label: string;
   className?: string;
   loading?: boolean;
+};
+
+export type NotifyProps = {
+  image: string;
+  classAnimated?: boolean;
+  title: string;
+  content?: string;
+};
+
+export type NotifyComponentProps = {
+  t: Toast;
+  image: string;
+  classAnimated?: boolean;
+  content?: string;
+  title: string;
 };

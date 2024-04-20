@@ -25,7 +25,7 @@ export interface ListNotes {
 }
 
 export interface DataNotes {
-  title?: string;
+  title: string;
   content?: string;
   date?: string;
   img?: string;

@@ -2,7 +2,7 @@ import Layout from "@/src/components/Layout";
 import { persistor, store } from "@/store";
 import "@/styles/globals.css";
 import "@/styles/sidebar.css";
-import "@/styles/textfield.css";
+import "@/styles/notify.css";
 import "@fontsource/lato";
 import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";

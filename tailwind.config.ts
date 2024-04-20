@@ -22,6 +22,8 @@ const config: Config = {
       },
       boxShadow: {
         'custom-tooltip': '0 0 1px 0 rgba(0, 0, 0, 0.5)',
+        'custom-notify': '3px 3px 10px 0 rgba(0, 0, 0, 0.1)',
+
       }
 
     },

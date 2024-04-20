@@ -8,17 +8,12 @@ import {
   TextField,
 } from "@mui/material";
 import React, { ChangeEvent, useRef, useState } from "react";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import Image from "next/image";
-import MenuActions from "../MenuActions/MenuActions";
-import EditNoteIcon from "@mui/icons-material/EditNote";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { formatTime } from "@/src/utils/utilsFunctions";
 import SearchIcon from "@mui/icons-material/Search";
 import ClearIcon from "@mui/icons-material/Clear";
 import CustomButton from "../CustomButton/CustomButton";
 import CustomPopup from "../CustomPopup";
 import CreateNotes from "@/src/modules/CreateNotes";
+import NoteList from "../NoteList";
 
 const ListDataSearch: React.FC<ParamsListDataSearch> = ({
   setPage,
@@ -121,56 +116,7 @@ const ListDataSearch: React.FC<ParamsListDataSearch> = ({
                   </p>
                 </div>
               ) : (
-                <div className="w-full h-auto grid grid-cols-5 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-                  {notes?.map((note) => {
-                    console.log("noteDate", note.date);
-                    const dateFormated = note.date ? new Date(note.date) : null;
-                    const convertDate = formatTime(dateFormated as Date);
-                    console.log("convertDate", convertDate);
-
-                    console.log("note", note);
-
-                    const optionsListData = [
-                      {
-                        id: 1,
-                        name: "Editar nota",
-                        icon: <EditNoteIcon />,
-                        handlerOption: () =>
-                          console.log("Editar nota", note.id),
-                      },
-                      {
-                        id: 2,
-                        name: "Eliminar nota",
-                        icon: <DeleteForeverIcon />,
-                        handlerOption: () =>
-                          console.log("Eliminar nota", note.id),
-                      },
-                    ];
-                    return (
-                      <div
-                        key={note.id}
-                        className="w-full h-56 rounded-lg shadow-custom-tooltip px-4 pt-4 pb-3 flex flex-col gap-4 items-center"
-                      >
-                        <Image
-                          src={note.img ? note.img : "/icons/iconNotes.svg"}
-                          alt="search"
-                          width={152}
-                          height={152}
-                          className="xl"
-                        />
-                        <div className="w-full flex justify-between items-center">
-                          <div className="flex flex-col">
-                            <p className="text-xs font-medium">{note.title}</p>
-                            <p className="text-[10px] font-medium">
-                              {convertDate}
-                            </p>
-                          </div>
-                          <MenuActions options={optionsListData} />
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
+                <NoteList notes={notes} />
               )}
             </div>
             <Stack spacing={3} className="items-center">
