@@ -15,4 +15,4 @@ export const UserApi = createApi({
   }),
 });
 
-export const { useUserRegisterMutation, useLazyRefeshTokenQuery } = UserApi;
+export const { useUserRegisterMutation } = UserApi;

@@ -8,17 +8,13 @@ import {
   TextField,
 } from "@mui/material";
 import React, { ChangeEvent, useRef, useState } from "react";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import Image from "next/image";
-import MenuActions from "../MenuActions/MenuActions";
-import EditNoteIcon from "@mui/icons-material/EditNote";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { formatTime } from "@/src/utils/utilsFunctions";
 import SearchIcon from "@mui/icons-material/Search";
 import ClearIcon from "@mui/icons-material/Clear";
 import CustomButton from "../CustomButton/CustomButton";
 import CustomPopup from "../CustomPopup";
 import CreateNotes from "@/src/modules/CreateNotes";
+import NoteList from "../NoteList";
+import Image from "next/image";
 
 const ListDataSearch: React.FC<ParamsListDataSearch> = ({
   setPage,
@@ -56,7 +52,7 @@ const ListDataSearch: React.FC<ParamsListDataSearch> = ({
     setSearch("");
   };
 
-  const handleChangePage = (newPage: number) => {
+  const handleChangePage = (event: ChangeEvent<unknown>, newPage: number) => {
     setPage(newPage);
   };
 
@@ -87,101 +83,52 @@ const ListDataSearch: React.FC<ParamsListDataSearch> = ({
         />
         <CustomButton
           label="Agregar Nota"
-          classNameButton="bg-primary text-white rounded-lg px-11  w-auto h-8"
+          className="bg-primary text-white rounded-lg px-11 w-auto py-2 "
           onClick={toggleCreateNote}
         />
-        <CustomPopup customRef={createNote} closeOnEscape={false} >
-          <CreateNotes
-            onClose={toggleCreateNote}
-          />
+        <CustomPopup customRef={createNote} closeOnEscape={false}>
+          <CreateNotes onClose={toggleCreateNote} />
         </CustomPopup>
-      
       </div>
 
-      <div className="flex flex-col">
+      <div className="flex flex-col w-full">
         {isLoading ? (
           <Box
             sx={{ width: "584px", height: "50vh" }}
-            className="flex justify-center items-center h-"
+            className="flex flex-col justify-center items-center self-center"
           >
             <CircularProgress />
+            <p className="text-xl mt-3">Cargando...</p>
           </Box>
         ) : (
-          <div className="flex flex-col gap-4">
-            <div className="h-auto w-full">
-              {notes?.length === 0 ? (
-                <div className="w-full h-full flex flex-col justify-center items-center gap-6">
-                  {/* <Image
-                    src="/icons/errorSearch.svg"
-                    alt="errorSearch"
-                    className="w-96"
-                    width={152}
-                    height={152}
-                  /> */}
-                  <p className="text-xl font-semibold"> ¡Ocurrio un error! </p>
-                  <p className="text-lg font-normal">
-                    No se encontraron resultados
-                  </p>
-                </div>
-              ) : (
-                <div className="w-full h-auto grid grid-cols-5 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-                  {notes?.map((note) => {
-                    console.log("noteDate", note.date);
-                    const dateFormated = note.date ? new Date(note.date) : null;
-                    const convertDate = formatTime(dateFormated as Date);
-                    console.log("convertDate", convertDate);
+          <div className="flex flex-col gap-4 h-auto w-full">
+            {notes?.length === 0 ? (
+              <div className="w-full h-full flex flex-col justify-center items-center gap-6 mt-20">
+                <Image
+                  src="/icons/iconErrorSearch.svg"
+                  alt="errorSearch"
+                  width={300}
+                  height={300}
+                />
+                <p className="text-xl font-semibold"> ¡Ocurrio un error! </p>
+                <p className="text-lg font-normal">
+                  No se encontraron resultados
+                </p>
+              </div>
+            ) : (
+              <>
+                <NoteList notes={notes} />
 
-                    const optionsListData = [
-                      {
-                        id: 1,
-                        name: "Editar nota",
-                        icon: <EditNoteIcon />,
-                        handlerOption: () =>
-                          console.log("Editar nota", note.id),
-                      },
-                      {
-                        id: 2,
-                        name: "Eliminar nota",
-                        icon: <DeleteForeverIcon />,
-                        handlerOption: () =>
-                          console.log("Eliminar nota", note.id),
-                      },
-                    ];
-                    return (
-                      <div
-                        key={note.id}
-                        className="w-full h-56 rounded-lg shadow-custom-tooltip px-4 pt-4 pb-3 flex flex-col gap-4 items-center"
-                      >
-                        <Image
-                          src="/icons/iconNotes.svg"
-                          alt="search"
-                          width={152}
-                          height={152}
-                          className="xl"
-                        />
-                        <div className="w-full flex justify-between items-center">
-                          <div className="flex flex-col">
-                            <p className="text-xs font-medium">{note.title}</p>
-                            <p className="text-[10px] font-medium">
-                              {convertDate}
-                            </p>
-                          </div>
-                          <MenuActions options={optionsListData} />
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-            <Stack spacing={3} className="items-center">
-              <Pagination
-                count={totalPage}
-                color="standard"
-                page={page}
-                onChange={(event, newPage) => handleChangePage(newPage)}
-              />
-            </Stack>
+                <Stack spacing={3} className="items-center">
+                  <Pagination
+                    count={totalPage}
+                    color="standard"
+                    page={page}
+                    onChange={handleChangePage}
+                  />
+                </Stack>
+              </>
+            )}
           </div>
         )}
       </div>
