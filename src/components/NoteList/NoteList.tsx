@@ -7,6 +7,15 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import MenuActions from "../MenuActions/MenuActions";
 import CustomPopup from "../CustomPopup";
 import CreateNotes from "@/src/modules/CreateNotes";
+import { useLazyDeleteNoteQuery } from "@/services/journalApi";
+import {
+  notificationError,
+  notificationLoadProcess,
+  notificationSuccess,
+} from "@/src/utils/notifyFunctions";
+import { useDispatch } from "react-redux";
+import { setRefresh } from "@/slices/refreshSlice";
+// import { refreshNoteState } from "@/slices/noteSlice";
 
 type Props = {
   notes: DataNotes[];
@@ -16,8 +25,35 @@ const NoteList = ({ notes }: Props) => {
   const createNote = useRef();
   const [selectNote, setSelectNote] = useState<string | undefined>("");
 
+  const [deleteNote, { isLoading }] = useLazyDeleteNoteQuery();
+  const dispatch = useDispatch();
+
   const toggleCreateNote = () => {
     (createNote.current as any).toggle();
+  };
+
+  const handleDeleteNote = async (id: string) => {
+    const response = await deleteNote(id);
+
+    if (isLoading) {
+      notificationLoadProcess({
+        title: "Eliminando nota",
+        content: "Por favor espere un momento",
+      });
+    }
+
+    if (response.data) {
+      notificationSuccess({
+        title: "Nota eliminada",
+        content: "La nota fue eliminada correctamente",
+      });
+      dispatch(setRefresh(true));
+    } else {
+      notificationError({
+        title: "Error al eliminar",
+        content: "Hubo un error al eliminar la nota",
+      });
+    }
   };
 
   return (
@@ -45,7 +81,7 @@ const NoteList = ({ notes }: Props) => {
             id: 2,
             name: "Eliminar nota",
             icon: <DeleteForeverIcon />,
-            handlerOption: () => console.log("Eliminar nota", note.id),
+            handlerOption: () => handleDeleteNote(note.id as string),
           },
         ];
         return (

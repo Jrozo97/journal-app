@@ -13,7 +13,6 @@ export type InitialDataNote = {
 
 export type InitialDataNoteRefresh = {
   note?: InitialDataNote;
-  refresh?: boolean;
 };
 
 export interface ListNotes {

@@ -30,4 +30,5 @@ export const {
   useLazyGetNoteByIdQuery,
   useUpdateNoteMutation,
   useLazyRefeshTokenQuery,
+  useLazyDeleteNoteQuery
 } = JournalAPi;
