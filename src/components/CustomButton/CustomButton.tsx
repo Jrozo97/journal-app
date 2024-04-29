@@ -19,7 +19,7 @@ const CustomButton = ({
     <button
       disabled={disabled}
       onClick={handleClick}
-      className={className}
+      className={`${className} flex items-center justify-center gap-2`}
     >
       {label}
       {loading && (

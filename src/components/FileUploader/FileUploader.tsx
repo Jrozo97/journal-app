@@ -2,22 +2,8 @@ import Image from "next/image";
 import React, { useCallback, useState } from "react";
 import { FileRejection, useDropzone } from "react-dropzone";
 import { Container, FileContainer } from "./FileUploader.style";
+import { FileUploaderProps } from "@/types/components.types";
 
-interface AcceptedFiles {
-  extensions: string[];
-  type: string;
-}
-
-interface FileUploaderProps {
-  setInputs: React.Dispatch<React.SetStateAction<{}>>;
-  acceptedFiles: AcceptedFiles
-  name: string;
-  value: File | File[] | null;
-  width?: string;
-  label?: string;
-  titleAcceptFile?: string;
-  height?: string;
-}
 
 const FileUploader = ({
   setInputs,
@@ -28,6 +14,7 @@ const FileUploader = ({
   label,
   titleAcceptFile,
   height,
+  imageDisplay
 }: FileUploaderProps) => {
   const [correctTypeFile, setCorrectTypeFile] = useState<boolean>(true);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -78,11 +65,11 @@ const FileUploader = ({
             height,
           })}
         >
-          {value && correctTypeFile ? (
+          {(value && correctTypeFile) || imageDisplay ? (
             <div className="flex justify-between items-center w-full">
               <div className="flex flex-col items-center">
                 <Image
-                  src={previewImage || "/icons/iconNotes.svg"}
+                  src={previewImage || `${imageDisplay}`}
                   alt="iconFile"
                   width={110}
                   height={110}

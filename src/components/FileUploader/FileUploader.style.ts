@@ -21,7 +21,7 @@ export const FileContainer = styled.div`
   display: flex;
   flex-direction: row;
   ${({ value, width, height, acceptedFiles }: {
-    value?: File | File[] | null;
+    value?: File | File[] | null | string;
     width?: string;
     height?: string;
     acceptedFiles?: AcceptedFiles

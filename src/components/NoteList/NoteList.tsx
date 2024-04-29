@@ -73,7 +73,7 @@ const NoteList = ({ notes }: Props) => {
       })}
 
       <CustomPopup customRef={createNote} closeOnEscape={false}>
-        <CreateNotes onClose={toggleCreateNote} id={selectNote} />
+        <CreateNotes onClose={toggleCreateNote} idNote={selectNote} />
       </CustomPopup>
     </div>
   );

@@ -29,7 +29,7 @@ export const noteSlice = createSlice({
   },
 });
 
-export const { setNoteState, resetNoteState } = noteSlice.actions;
+export const { setNoteState, resetNoteState, refreshNoteState } = noteSlice.actions;
 
 export const selectNote = (state: RootState) => state.note;
 

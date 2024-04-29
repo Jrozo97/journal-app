@@ -47,7 +47,6 @@ const SideMenu = () => {
       <div className="flex flex-col gap-6 mt-24">
         {option.map((item) => {
           const isEnabled = routes.pathname === item.url;
-          console.log("isEnabled", isEnabled)
           return (
             <div
               key={item.id}

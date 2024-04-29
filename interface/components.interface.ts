@@ -1,3 +1,5 @@
+import { DataNotes } from "./Notes";
+
 export interface OptionItem {
     id: number;
     name: string;
@@ -7,4 +9,9 @@ export interface OptionItem {
 
 export interface MenuActionsProps {
     options: OptionItem[];
+}
+
+export interface ResponseDataNote {
+    ok: boolean;
+    note: DataNotes;
 }

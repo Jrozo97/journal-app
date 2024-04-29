@@ -53,6 +53,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
           name={name}
           onChange={onChangeTextArea}
           defaultValue={defaultValue}
+          value={value}
           id={id}
           onKeyDown={handleKeyDown}
         />

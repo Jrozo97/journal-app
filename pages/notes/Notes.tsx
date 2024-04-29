@@ -9,61 +9,70 @@ import HeaderPage from "@/src/components/HeaderPage";
 import ListDataSearch from "@/src/components/ListDataSearch/ListDataSearch";
 import { useRefreshToken } from "@/src/hooks/useRefreshToken";
 import { checkTokenExpiration } from "@/src/utils/utilsFunctions";
+import { RTKUseCache } from "@/src/utils/utilsText";
+import { selectNote } from "@/slices/noteSlice";
 
 const Notes = () => {
   const handleLogout = async () => {
     await signOut();
   };
 
+  const refreshNote = useAppSelector(selectNote);
+
   const user = useAppSelector(selectUser);
-  console.log(user);
-  const [page, setPage] = useState(1);
-  const [search, setSearch] = useState("");
-  const [limit, setLimit] = useState(8);
-  const [totalPage, setTotalPage] = useState(0);
-  const [totalRecords, setTotalRecords] = useState(0);
-  const [error, setError] = useState(false);
+  const [page, setPage] = useState<number>(1);
+  const [search, setSearch] = useState<string>("");
+  const [limit, setLimit] = useState<number>(8);
+  const [totalPage, setTotalPage] = useState<number>(0);
+  const [totalRecords, setTotalRecords] = useState<number>(0);
+  const [error, setError] = useState<boolean>(false);
   const [notes, setNotes] = useState<DataNotes[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isRefreshingToken, setIsRefreshingToken] = useState<boolean>(false);
 
   const [getNotesList, { isLoading: isLoadingNotes }] =
     useLazyGetNotesListQuery();
 
-  const refreshToken = useRefreshToken();
-
-  // useEffect(() => {
-  //   const tokenRemainingTime = checkTokenExpiration(user.token);
-  //   if (tokenRemainingTime <= 2) {
-  //     refreshToken();
-  //   }
-  // }, [refreshToken, user.token]);
+  const refreshToken = useRefreshToken(setIsRefreshingToken);
 
   useEffect(() => {
+    const tokenRemainingTime = checkTokenExpiration(user.token);
+    if (tokenRemainingTime <= 2 && !isRefreshingToken) {
+      setIsRefreshingToken(true);
+      refreshToken();
+    }
+  }, [user.token, isRefreshingToken, refreshToken]);
+
+  const fetchNoteList = async (useCache: boolean) => {
     setIsLoading(true);
-    getNotesList({
-      page,
-      search,
-      limit,
-    })
+    getNotesList(
+      {
+        page,
+        search,
+        limit,
+      },
+      useCache
+    )
       .then((res) => {
         const resDataNote = res.data as ListNotes;
-        const resJson = res.data; // Type assertion to specify the type of resData
-        console.log("resData", resDataNote);
         setNotes(resDataNote.notes as DataNotes[]);
         setTotalPage(resDataNote?.totalPage as number);
         setTotalRecords(resDataNote?.totalRecords as number);
         setError(resDataNote?.error as boolean);
       })
       .catch((err) => {
-        console.log(err);
         setError(true);
       })
       .finally(() => {
         setIsLoading(false);
       });
-  }, [getNotesList, limit, page, search]);
+  };
 
-  console.log("notes", notes);
+  useEffect(() => {
+    const useCache = refreshNote.refresh ? false : RTKUseCache;
+    fetchNoteList(useCache);
+
+  }, [refreshNote.refresh]);
 
   return (
     <>

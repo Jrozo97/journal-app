@@ -44,3 +44,20 @@ export type NotifyComponentProps = {
   content?: string;
   title: string;
 };
+
+interface AcceptedFiles {
+  extensions: string[];
+  type: string;
+}
+
+export type FileUploaderProps = {
+  setInputs: React.Dispatch<React.SetStateAction<{}>>;
+  acceptedFiles: AcceptedFiles
+  name: string;
+  value: File | File[] | null | string;
+  width?: string;
+  label?: string;
+  titleAcceptFile?: string;
+  height?: string;
+  imageDisplay?: string;
+}

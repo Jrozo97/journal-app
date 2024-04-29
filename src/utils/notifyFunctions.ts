@@ -9,16 +9,18 @@ export const notificationSuccess = ({title, content}: {title: string; content: s
   });
 };
 
-export const notificationError = (title: string) => {
+export const notificationError = ({title, content}: {title: string; content: string}) => {
   notify({
     title: title,
+    content: content,
     image: "/icons/infoGray.svg",
   });
 };
 
-export const notificationLoadProcess = (title: string) => {
+export const notificationLoadProcess = ({title, content}: {title: string; content: string}) => {
   notify({
     title: title,
+    content: content,
     image: "/icons/loading.png",
     classAnimated: true,
   });
