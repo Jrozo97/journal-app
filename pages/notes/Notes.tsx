@@ -11,13 +11,16 @@ import { useRefreshToken } from "@/src/hooks/useRefreshToken";
 import { checkTokenExpiration } from "@/src/utils/utilsFunctions";
 import { RTKUseCache } from "@/src/utils/utilsText";
 import { selectNote } from "@/slices/noteSlice";
+import { selectRefresh } from "@/slices/refreshSlice";
 
 const Notes = () => {
   const handleLogout = async () => {
     await signOut();
   };
 
-  const refreshNote = useAppSelector(selectNote);
+  // const refreshNote = useAppSelector(selectNote);
+  const refresh =useAppSelector(selectRefresh);
+  console.log("refresh", refresh.refresh)
 
   const user = useAppSelector(selectUser);
   const [page, setPage] = useState<number>(1);
@@ -69,10 +72,10 @@ const Notes = () => {
   };
 
   useEffect(() => {
-    const useCache = refreshNote.refresh ? false : RTKUseCache;
+    const useCache = refresh.refresh ? false : RTKUseCache;
     fetchNoteList(useCache);
 
-  }, [refreshNote.refresh]);
+  }, [page, search, limit, refresh.refresh]);
 
   return (
     <>

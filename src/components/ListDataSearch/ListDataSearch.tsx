@@ -14,6 +14,7 @@ import CustomButton from "../CustomButton/CustomButton";
 import CustomPopup from "../CustomPopup";
 import CreateNotes from "@/src/modules/CreateNotes";
 import NoteList from "../NoteList";
+import Image from "next/image";
 
 const ListDataSearch: React.FC<ParamsListDataSearch> = ({
   setPage,
@@ -51,7 +52,7 @@ const ListDataSearch: React.FC<ParamsListDataSearch> = ({
     setSearch("");
   };
 
-  const handleChangePage = (newPage: number) => {
+  const handleChangePage = (event: ChangeEvent<unknown>, newPage: number) => {
     setPage(newPage);
   };
 
@@ -90,43 +91,44 @@ const ListDataSearch: React.FC<ParamsListDataSearch> = ({
         </CustomPopup>
       </div>
 
-      <div className="flex flex-col">
+      <div className="flex flex-col w-full">
         {isLoading ? (
           <Box
             sx={{ width: "584px", height: "50vh" }}
-            className="flex justify-center items-center h-"
+            className="flex flex-col justify-center items-center self-center"
           >
             <CircularProgress />
+            <p className="text-xl mt-3">Cargando...</p>
           </Box>
         ) : (
-          <div className="flex flex-col gap-4">
-            <div className="h-auto w-full">
-              {notes?.length === 0 ? (
-                <div className="w-full h-full flex flex-col justify-center items-center gap-6">
-                  {/* <Image
-                    src="/icons/errorSearch.svg"
-                    alt="errorSearch"
-                    className="w-96"
-                    width={152}
-                    height={152}
-                  /> */}
-                  <p className="text-xl font-semibold"> ¡Ocurrio un error! </p>
-                  <p className="text-lg font-normal">
-                    No se encontraron resultados
-                  </p>
-                </div>
-              ) : (
+          <div className="flex flex-col gap-4 h-auto w-full">
+            {notes?.length === 0 ? (
+              <div className="w-full h-full flex flex-col justify-center items-center gap-6 mt-20">
+                <Image
+                  src="/icons/iconErrorSearch.svg"
+                  alt="errorSearch"
+                  width={300}
+                  height={300}
+                />
+                <p className="text-xl font-semibold"> ¡Ocurrio un error! </p>
+                <p className="text-lg font-normal">
+                  No se encontraron resultados
+                </p>
+              </div>
+            ) : (
+              <>
                 <NoteList notes={notes} />
-              )}
-            </div>
-            <Stack spacing={3} className="items-center">
-              <Pagination
-                count={totalPage}
-                color="standard"
-                page={page}
-                onChange={(event, newPage) => handleChangePage(newPage)}
-              />
-            </Stack>
+
+                <Stack spacing={3} className="items-center">
+                  <Pagination
+                    count={totalPage}
+                    color="standard"
+                    page={page}
+                    onChange={handleChangePage}
+                  />
+                </Stack>
+              </>
+            )}
           </div>
         )}
       </div>

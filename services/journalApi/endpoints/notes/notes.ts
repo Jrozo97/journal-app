@@ -36,6 +36,14 @@ function endpoints(builder: any) {
       providesTags: ["NotesList"],
       transformResponse: (res: any) => res || {},
     }),
+    deleteNote: builder.query({
+      query: (id: string) => ({
+        url: `/notes/delete/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["NotesList"],
+      transformResponse: (res: any) => res || {},
+    }),
   };
 }
 

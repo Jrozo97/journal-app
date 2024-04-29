@@ -6,7 +6,8 @@ import {
   useLazyGetNotesListQuery,
   useUpdateNoteMutation,
 } from "@/services/journalApi";
-import { refreshNoteState } from "@/slices/noteSlice";
+import { setRefresh } from "@/slices/refreshSlice";
+// import { refreshNoteState } from "@/slices/noteSlice";
 import { selectUser } from "@/slices/userSlice";
 import CustomButton from "@/src/components/CustomButton/CustomButton";
 import CustomInput from "@/src/components/CustomInput";
@@ -86,7 +87,7 @@ const CreateNotes = ({
             title: "Nota actualizada",
             content: "Tu nota ha sido actualizada exitosamente",
           });
-          dispatch(refreshNoteState(true));
+          dispatch(setRefresh(true));
           onClose();
         } else {
           notificationError({
@@ -110,7 +111,7 @@ const CreateNotes = ({
             content: "Tu nota ha sido actualizada exitosamente",
           });
 
-          dispatch(refreshNoteState(true));
+          dispatch(setRefresh(true));
           onClose();
         } else {
           notificationError({
@@ -128,7 +129,7 @@ const CreateNotes = ({
           title: "Nota creada",
           content: "Tu nota ha sido creada exitosamente",
         });
-        dispatch(refreshNoteState(true));
+        dispatch(setRefresh(true));
         onClose();
       } else {
         notificationError({

@@ -8,8 +8,7 @@ const initialState: InitialDataNoteRefresh = {
     content: "",
     img: "",
     userId: "",
-  },
-  refresh: false,
+  }
 };
 
 
@@ -20,16 +19,14 @@ export const noteSlice = createSlice({
     setNoteState: (state, action) => {
       return { ...state, ...action.payload };
     },
-    refreshNoteState: (state, action) => {
-      return { ...state, refresh: action.payload }
-    },
+
     resetNoteState: () => {
       return { ...initialState };
     },
   },
 });
 
-export const { setNoteState, resetNoteState, refreshNoteState } = noteSlice.actions;
+export const { setNoteState, resetNoteState } = noteSlice.actions;
 
 export const selectNote = (state: RootState) => state.note;
 

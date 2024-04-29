@@ -115,7 +115,7 @@ const Register = () => {
         </div>
         <CustomButton
           label="Registrarse"
-          classNameButton="w-32 py-2 bg-green rounded-md text-white my-8 disabled:bg-gray disabled:cursor-not-allowed"
+          className="w-32 py-2 bg-green rounded-md text-white my-8 disabled:bg-gray disabled:cursor-not-allowed"
           onClick={handleSubmit}
           disabled={isDisabled || error}
           loading={isLoadingUser}
