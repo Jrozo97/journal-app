@@ -37,14 +37,17 @@ const Notes = () => {
     useLazyGetNotesListQuery();
 
   const refreshToken = useRefreshToken(setIsRefreshingToken);
-
-  useEffect(() => {
     const tokenRemainingTime = checkTokenExpiration(user.token);
-    if (tokenRemainingTime <= 2 && !isRefreshingToken) {
-      setIsRefreshingToken(true);
-      refreshToken();
-    }
-  }, [user.token, isRefreshingToken, refreshToken]);
+    console.log("tokenRemainingTime", tokenRemainingTime)
+
+
+  // useEffect(() => {
+  //   const tokenRemainingTime = checkTokenExpiration(user.token);
+  //   if (tokenRemainingTime === 2 && !isRefreshingToken) {
+  //     setIsRefreshingToken(true);
+  //     refreshToken();
+  //   }
+  // }, [user.token, isRefreshingToken, refreshToken]);
 
   const fetchNoteList = async (useCache: boolean) => {
     setIsLoading(true);

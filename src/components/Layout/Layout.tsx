@@ -7,9 +7,9 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   return (
     <ThemeProvider theme={journalTheme}>
-      <div className="flex flex-row h-screen w-screen">
+      <div className="flex flex-row min-h-screen w-screen">
         <SideMenu />
-        <div className="flex flex-col pr-20 pt-20 pl-16 w-[84.45vw]">{children}</div>
+        <div className="flex flex-col pr-20 pt-20 pl-16 w-screen dark:bg-dark-primary">{children}</div>
       </div>
     </ThemeProvider>
   );

@@ -7,7 +7,7 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import React, { ChangeEvent, useRef, useState } from "react";
+import React, { ChangeEvent, useContext, useRef, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import ClearIcon from "@mui/icons-material/Clear";
 import CustomButton from "../CustomButton/CustomButton";
@@ -15,6 +15,8 @@ import CustomPopup from "../CustomPopup";
 import CreateNotes from "@/src/modules/CreateNotes";
 import NoteList from "../NoteList";
 import Image from "next/image";
+import { DarkModeContext } from "@/context/darkModeContext";
+import CustomInput from "../CustomInput";
 
 const ListDataSearch: React.FC<ParamsListDataSearch> = ({
   setPage,
@@ -28,6 +30,7 @@ const ListDataSearch: React.FC<ParamsListDataSearch> = ({
   const [inputSearch, setInputSearch] = useState<string>("");
   const [typingTimeout, setTypingTimeout] = useState<number | null>(null);
   const createNote = useRef();
+  const { theme } = useContext(DarkModeContext);
 
   const toggleCreateNote = () => {
     (createNote.current as any).toggle();
@@ -59,31 +62,16 @@ const ListDataSearch: React.FC<ParamsListDataSearch> = ({
   return (
     <div className="w-full flex flex-col mt-16">
       <div className="flex w-ful justify-between mb-8 item">
-        <TextField
-          label="Buscar usuario"
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="start">
-                {inputSearch === "" ? (
-                  <SearchIcon />
-                ) : (
-                  <ClearIcon
-                    onClick={() => handleDeleteSearch()}
-                    className="cursor-pointer"
-                  />
-                )}{" "}
-              </InputAdornment>
-            ),
-          }}
-          variant="outlined"
-          sx={{ width: "360px" }}
+        <CustomInput
+          type="text"
+          placeholder="Buscar usuario"
           value={inputSearch}
           onChange={handleSearch}
-          className="cursor-pointer"
+          className="w-80 px-4 py-2 border border-gray rounded-md dark:bg-dark-primary dark:text-white dark:border-dark-gray dark:focus:border-white/60"
         />
         <CustomButton
           label="Agregar Nota"
-          className="bg-primary text-white rounded-lg px-11 w-auto py-2 "
+          className="bg-primary text-white rounded-lg px-11 w-auto py-2 dark:bg-white dark:text-primary dark:hover:bg-primary dark:hover:text-white"  
           onClick={toggleCreateNote}
         />
         <CustomPopup customRef={createNote} closeOnEscape={false}>
@@ -98,22 +86,27 @@ const ListDataSearch: React.FC<ParamsListDataSearch> = ({
             className="flex flex-col justify-center items-center self-center"
           >
             <CircularProgress />
-            <p className="text-xl mt-3">Cargando...</p>
+            <p className="text-xl mt-3 dark:text-white">Cargando...</p>
           </Box>
         ) : (
           <div className="flex flex-col gap-4 h-auto w-full">
             {notes?.length === 0 ? (
-              <div className="w-full h-full flex flex-col justify-center items-center gap-6 mt-20">
+              <div className="w-full h-full flex flex-col justify-center items-center gap-10 mt-20">
                 <Image
                   src="/icons/iconErrorSearch.svg"
                   alt="errorSearch"
                   width={300}
                   height={300}
                 />
-                <p className="text-xl font-semibold"> ¡Ocurrio un error! </p>
-                <p className="text-lg font-normal">
-                  No se encontraron resultados
-                </p>
+                <div className="flex flex-col gap-2 ">
+                  <p className="text-xl font-semibold text-center dark:text-white">
+                    {" "}
+                    ¡Ocurrio un error!{" "}
+                  </p>
+                  <p className="text-lg font-normal text-center dark:text-white">
+                    No se encontraron resultados
+                  </p>
+                </div>
               </div>
             ) : (
               <>
@@ -122,7 +115,12 @@ const ListDataSearch: React.FC<ParamsListDataSearch> = ({
                 <Stack spacing={3} className="items-center">
                   <Pagination
                     count={totalPage}
-                    color="standard"
+                    color={theme === "dark" ? "primary" : "standard"}
+                    sx={{
+                      "& .MuiPaginationItem-root": {
+                        color: theme === "dark" ? "white" : "black",
+                      },
+                    }}
                     page={page}
                     onChange={handleChangePage}
                   />

@@ -5,11 +5,12 @@ const config: Config = {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/**/*.{js,ts,jsx,tsx,mdx}"
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  darkMode: "class",
   theme: {
     extend: {
-      colors:{
+      colors: {
         "primary": "#1D5C63",
         "secondary": "#2C98A0",
         "gray": "#9E9E9E",
@@ -19,13 +20,17 @@ const config: Config = {
         "green": "#2C98A0",
         "green-g": "#417D7A",
         "green-white": "#F2FBFB",
+        "dark-primary": "#010409",
+        "dark-secondary": "#0D1117",
+        "dark-green": "#6CE1BD",
+        "dark-gray": "#636C76"
       },
       boxShadow: {
-        'custom-tooltip': '0 0 1px 0 rgba(0, 0, 0, 0.5)',
-        'custom-notify': '3px 3px 10px 0 rgba(0, 0, 0, 0.1)',
-
-      }
-
+        "custom-tooltip": "0 0 1px 0 rgba(0, 0, 0, 0.5)",
+        "custom-notify": "3px 3px 10px 0 rgba(0, 0, 0, 0.1)",
+        "custom-card": "0 0 10px 0 rgba(0, 0, 0, 0.1)",
+        "custom-tooltip-dark": "0 0 1px 0 rgba(255, 255, 255, 1)",
+      },
     },
   },
   plugins: [],

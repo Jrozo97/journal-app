@@ -61,3 +61,8 @@ export type FileUploaderProps = {
   height?: string;
   imageDisplay?: string;
 }
+
+export type DarkModeContextProps = {
+  theme: 'dark' | 'light' | 'system';
+  handleChangeTheme: () => void;
+};

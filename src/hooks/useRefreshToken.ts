@@ -12,7 +12,9 @@ export const useRefreshToken = (setIsRefreshingToken: Dispatch<SetStateAction<bo
     try {
       setIsRefreshingToken(true);
       const res = await refeshToken({ uid: user.uid, name: user.name });
-      dispatch(setUserState(res.data));
+      if (res.data) {
+        dispatch(setUserState(res.data));
+      }
     } catch (error) {
       console.error(error);
     } finally {
