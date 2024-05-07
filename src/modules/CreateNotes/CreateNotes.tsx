@@ -26,7 +26,6 @@ const CreateNotes = ({
   onClose: () => void;
   idNote?: string;
 }) => {
-
   const user = useAppSelector(selectUser);
   const [inputs, setInputs] = useState<any>({
     title: "",
@@ -144,6 +143,8 @@ const CreateNotes = ({
     pdfConvertBase64(inputs.file);
   }, [inputs.file]);
 
+  const isDisabled = inputs.title === "" || inputs.content === "";
+
   function pdfConvertBase64(file: File | null) {
     if (file) {
       const reader = new FileReader();
@@ -158,8 +159,8 @@ const CreateNotes = ({
   }
 
   return (
-    <section className="pt-16 px-28 pb-10 bg-white rounded-2xl flex flex-col items-center w-[680px] h-auto ">
-      <h1 className="font-bold text-3xl text-primary">
+    <section className="pt-16 px-28 pb-10 bg-white rounded-2xl flex flex-col items-center w-[680px] h-auto dark:bg-dark-primary ">
+      <h1 className="font-bold text-3xl text-primary dark:text-white">
         {idNote ? "Actualizar nota" : "Creación de nota"}
       </h1>
       <main className="w-full flex flex-col mt-10 gap-6">
@@ -170,7 +171,7 @@ const CreateNotes = ({
           value={inputs.title}
           // defaultValue={inputs.title}
           onChange={handleChange}
-          className="w-full h-12 border-b border-gray-300 px-4 outline-none rounded-lg"
+          className="w-full h-12 border-b border-gray-300 px-4 outline-none rounded-lg dark:border-dark-gray dark:focus:border-white/60 dark:bg-dark-primary dark:text-white dark:placeholder-light-gray dark:placeholder-opacity-60"
           type="text"
         />
         <CustomInput
@@ -180,7 +181,7 @@ const CreateNotes = ({
           value={inputs.content}
           // defaultValue={inputs.content}
           onChangeTextArea={handleChange}
-          className="w-full h-48 border border-gray-300 rounded-lg px-4 py-2 notebook-textarea"
+          className="w-full h-48 border border-gray-300 rounded-lg px-4 py-2 notebook-textarea dark:border-dark-gray dark:focus:border-white/60 dark:bg-dark-primary dark:text-white dark:placeholder-light-gray dark:placeholder-opacity-60"
           type="textarea"
         />
         <FileUploader
@@ -202,14 +203,14 @@ const CreateNotes = ({
         <CustomButton
           label="Cancelar"
           onClick={onClose}
-          className="w-36 h-12 bg-primary text-white rounded-lg"
+          className="w-36 h-12 border border-primary text-primary rounded-lg hover:bg-primary hover:text-white dark:border-white dark:text-white dark:hover:bg-primary dark:hover:text-white dark:hover:border-none"
         />
         <CustomButton
           label={idNote ? "Actualizar" : "Crear"}
           onClick={handleSubmit}
           loading={isLoadingCreate || isLoadingUpdate}
-          className="w-36 h-12 bg-primary text-white rounded-lg"
-          disabled={isLoadingCreate || isLoadingUpdate}
+          className="w-36 h-12 bg-primary text-white rounded-lg disabled:bg-dark-gray disabled:text-gray-500 disabled:cursor-not-allowed"
+          disabled={isLoadingCreate || isLoadingUpdate || isDisabled}
         />
       </footer>
     </section>

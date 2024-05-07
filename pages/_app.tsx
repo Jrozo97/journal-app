@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
+import { DarkModeProvider } from "@/context/darkModeContext";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter(); // Obtener la instancia de router
@@ -23,13 +24,15 @@ export default function App({ Component, pageProps }: AppProps) {
       <Provider store={store}>
         <PersistGate persistor={persistor} loading={null}>
           <Toaster position="top-right" reverseOrder={true} />
-          {shouldRenderLayout ? (
-            <Layout>
+          <DarkModeProvider>
+            {shouldRenderLayout ? (
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            ) : (
               <Component {...pageProps} />
-            </Layout>
-          ) : (
-            <Component {...pageProps} />
-          )}
+            )}
+          </DarkModeProvider>
         </PersistGate>
       </Provider>
     </SessionProvider>

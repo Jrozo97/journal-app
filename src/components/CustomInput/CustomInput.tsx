@@ -39,7 +39,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
     <div>
       {label && (
         <p
-          className={`text-[${labelFontSize}] text-left font-medium pb-2`}
+          className={`text-[${labelFontSize}] text-left font-medium pb-2 dark:text-white`}
         >
           {label}
         </p>

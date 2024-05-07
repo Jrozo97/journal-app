@@ -87,7 +87,7 @@ const NoteList = ({ notes }: Props) => {
         return (
           <div
             key={note.id}
-            className="w-full max-w-56 h-56 rounded-lg shadow-custom-tooltip px-4 pt-4 pb-3 flex flex-col gap-4 items-center justify-center"
+            className="w-full max-w-56 h-56 rounded-lg shadow-custom-tooltip px-4 pt-4 pb-3 flex flex-col gap-4 items-center justify-center dark:shadow-custom-tooltip-dark "
           >
             <Image
               src={note.img ? note.img : "/icons/iconNotes.svg"}
@@ -99,8 +99,8 @@ const NoteList = ({ notes }: Props) => {
             />
             <div className="w-full flex justify-between items-center">
               <div className="flex flex-col">
-                <p className="text-xs font-medium">{tittleTrimmed}</p>
-                <p className="text-[10px] font-medium">{convertDate}</p>
+                <p className="text-xs font-medium dark:text-white">{tittleTrimmed}</p>
+                <p className="text-[10px] font-medium dark:text-white">{convertDate}</p>
               </div>
               <MenuActions options={optionsListData} />
             </div>

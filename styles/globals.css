@@ -20,7 +20,11 @@ body {
 .notebook-textarea {
   background-image: linear-gradient(to bottom, transparent 95%, rgba(0, 0, 0, 0.1) 95%);
   background-size: 100% 1.3rem;
-  line-height: 1.256rem;
-  padding-top: 0.24rem;
-  padding-bottom: 1rem;
+  line-height: 1.3rem;
+  padding-top: 0.15rem;
+  padding-bottom: 1.25rem;
+}
+
+:where(html.dark) .notebook-textarea {
+  background-image: linear-gradient(to bottom, transparent 95%, rgba(255, 255, 255, 0.15) 95%);
 }

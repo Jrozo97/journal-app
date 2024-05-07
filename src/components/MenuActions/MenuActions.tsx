@@ -1,11 +1,15 @@
 import { IconButton, Menu, MenuItem } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 import { MenuActionsProps } from '@/interface/components.interface';
+import { DarkModeContext } from '@/context/darkModeContext';
 
 
 const MenuActions: React.FC <MenuActionsProps> = ({ options }) => {
+
+  const { theme } = useContext(DarkModeContext);
+
 
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
@@ -28,7 +32,9 @@ const MenuActions: React.FC <MenuActionsProps> = ({ options }) => {
 				sx={{ padding: '0px' }}
 
 			>
-				<MoreVertIcon />
+				<MoreVertIcon 
+					sx={{ color: theme === 'dark' ? '#fff' : '#000' }}
+				/>
 			</IconButton>
 
 			<Menu

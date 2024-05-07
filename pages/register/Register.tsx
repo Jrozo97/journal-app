@@ -60,9 +60,13 @@ const Register = () => {
     }
   };
 
+  const redirectToLogin = () => {
+    router.push("/login");
+  };
+
   return (
-    <div className="bg-gradient-to-r from-green via-green-g to-primary from-0% via-55% to-100%  w-screen h-screen flex justify-center items-center">
-      <div className="px-20 py-9 bg-white rounded-2xl flex flex-col items-center">
+    <div className="dark:bg-dark-bg bg-secondary w-screen h-screen flex justify-center items-center dark:bg-dark-secondary">
+      <div className="px-20 py-9 bg-white dark:bg-dark-primary rounded-2xl flex flex-col items-center">
         <div className="flex flex-col gap-2 items-center">
           <Image
             src="icons/logo-journal.svg"
@@ -70,19 +74,21 @@ const Register = () => {
             height={60}
             alt="logo"
           />
-          <h1 className="text-2xl font-semibold italic text-center">
+          <h1 className="text-2xl font-semibold italic text-center dark:text-white">
             JournalApp
           </h1>
-          <p className="text-sm italic text-center text-green-g">
+          <p className="text-sm italic text-center text-green-g dark:font-semibold">
             Nunca lo olvides
           </p>
         </div>
-        <p className="text-2xl font-semibold mt-10">Registrate</p>
+        <p className="text-2xl font-semibold mt-10 dark:text-white">
+          Registrate
+        </p>
 
         <div className="flex flex-col gap-5 mt-10">
           <CustomInput
             type="text"
-            className="w-80 h-9 border border-black pl-2 rounded-md"
+            className="w-80 h-9 border border-black pl-2 rounded-md dark:bg-dark-primary dark:text-white dark:border-dark-gray dark:focus:border-white/60"
             placeholder="Ingrese su nombre"
             label="Nombre completo"
             name="name"
@@ -90,7 +96,7 @@ const Register = () => {
           />
           <CustomInput
             type="email"
-            className="w-80 h-9 border border-black pl-2 rounded-md"
+            className="w-80 h-9 border border-black pl-2 rounded-md dark:bg-dark-primary dark:text-white dark:border-dark-gray dark:focus:border-white/60"
             placeholder="Correo electronico"
             label="Correo electronico"
             name="email"
@@ -98,7 +104,7 @@ const Register = () => {
           />
           <CustomInput
             type="tel"
-            className="w-80 h-9 border border-black pl-2 rounded-md"
+            className="w-80 h-9 border border-black pl-2 rounded-md dark:bg-dark-primary dark:text-white dark:border-dark-gray dark:focus:border-white/60"
             placeholder="Ingrese su telefono"
             label="Telefono"
             name="phone"
@@ -106,7 +112,7 @@ const Register = () => {
           />
           <CustomInput
             type="password"
-            className="w-80 h-9 border border-black pl-2 rounded-md "
+            className="w-80 h-9 border border-black pl-2 rounded-md dark:bg-dark-primary dark:text-white dark:border-dark-gray dark:focus:border-white/60 "
             placeholder="Ingrese la contraseña"
             label="Contraseña"
             name="password"
@@ -120,9 +126,12 @@ const Register = () => {
           disabled={isDisabled || error}
           loading={isLoadingUser}
         />
-        <p className="text-sm font-normal ">
+        <p className="text-sm font-normal dark:text-white">
           ¿Ya tiene una cuenta?{" "}
-          <span className="font-medium text-primary underline">
+          <span
+            className="font-medium text-primary underline cursor-pointer dark:text-secondary dark:font-semibold"
+            onClick={redirectToLogin}
+          >
             Iniciar sesión
           </span>
         </p>
